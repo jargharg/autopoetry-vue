@@ -1,18 +1,19 @@
 <template>
     <div class="home">
         <TopNav />
+        <InputForm />
     </div>
 </template>
 
 <script>
-import HelloWorld from '@/components/HelloWorld.vue';
 import TopNav from '@/components/TopNav.vue';
+import InputForm from '@/components/InputForm.vue';
 
 export default {
     name: 'home',
     components: {
-        HelloWorld,
         TopNav,
+        InputForm,
     },
 };
 </script>
