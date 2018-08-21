@@ -1,16 +1,16 @@
 <template>
-	<form class="input-form" :submit.prevent="submitPoem()">
+	<form class="input-form" @submit.prevent="submitPoem()">
 		<input
-		type="text"
-		placeholder="Enter a phrase"
-		autoComplete="off"
-		autoFocus
-		:model="input" />
+			type="text"
+			placeholder="Enter a phrase"
+			autoComplete="off"
+			autoFocus
+			v-model="input" />
+
 		<input
-		type="submit"
-		value="Make a new poem"
-		:class="{'input-form__submit-hidden': input}"
-		/>
+			type="submit"
+			value="Make a new poem"
+			:class="{ 'input-form__submit-hidden': !input }"/>
 	</form>
 </template>
 
@@ -21,8 +21,9 @@ export default {
 	data: () => ({ input: '' }),
 	methods: {
 		submitPoem() {
+			console.log(this.input);
 			if (this.input) {
-				poemSearch(this.input);
+				// poemSearch(this.input);
 				this.input = '';
 			}
 		},
@@ -38,9 +39,11 @@ export default {
 	position: relative;
 	transition: 0.1s all;
 	width: 100%;
-	@mixin atMedium {
+
+	@include atMedium {
 		padding: 0;
 		width: 60%;
+
 		&::before,
 		&::after {
 			content: '';
@@ -49,9 +52,11 @@ export default {
 			position: absolute;
 			left: -200%;
 		}
+
 		&::before {
 			top: -20px;
 		}
+
 		&::after {
 			bottom: -20px;
 		}
@@ -71,9 +76,11 @@ export default {
 		padding: 10px;
 		transition: 0.1s all;
 		width: 100%;
+		
 		&[type='text'] {
 			border-bottom: 1px solid $primary-color;
 		}
+
 		&[type='submit'] {
 			background: $primary-color;
 			border-radius: 0;

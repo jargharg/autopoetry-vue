@@ -50,6 +50,7 @@ export default {
 	&:hover > .top-nav__info-icon {
 		opacity: 1;
 	}
+
 	&__name {
 		background: $primary-color;
 		color: $bg-color;
@@ -57,14 +58,17 @@ export default {
 		letter-spacing: 2px;
 		padding: 8px;
 		transition: 0.2s;
-		@mixin atMedium {
+
+		@include atMedium {
 			background: none;
 			color: $primary-color;
 		}
+
 		&.hidden + .top-nav__info-icon {
 			color: $primary-color;
 		}
 	}
+
 	&__info-icon {
 		color: $bg-color;
 		opacity: 0.4;
@@ -72,10 +76,12 @@ export default {
 		right: 10px;
 		top: 5px;
 		transition: all 0.4s;
-		@mixin atMedium {
+
+		@include atMedium {
 			color: $primary-color;
 		}
 	}
+
 	&__details {
 		background: $primary-color;
 		color: $bg-color;
@@ -88,10 +94,12 @@ export default {
 		visibility: hidden;
 		width: 100%;
 		z-index: 100;
+
 		a {
 			color: inherit;
 			display: inline-block;
 		}
+		
 		&--expanded {
 			max-height: 400px;
 			padding: 10px;
