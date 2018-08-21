@@ -1,12 +1,20 @@
 <template>
 	<div id="app">
-<!-- 		<div id="nav">
-			<router-link to="/">Home</router-link> |
-			<router-link to="/about">About</router-link>
-		</div> -->
+		<TopNav />
 		<router-view />
 	</div>
 </template>
+
+<script>
+import TopNav from '@/components/TopNav.vue';
+	
+export default {
+	name: 'App',
+	components: {
+		TopNav,
+	},
+};
+</script>
 
 <style lang="scss">
 html,
@@ -22,7 +30,7 @@ body,
 	color: $primary-color;
 	font-size: 1rem;
 	background-color: $bg-color;
-	
+
 	@include atMedium {
 		overflow: -webkit-paged-y;
 	}
