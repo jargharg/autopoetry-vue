@@ -1,18 +1,24 @@
 <template>
 	<div class="poem-container">
-		<h1>This is a poem</h1>
+		<PoemHeader :title="title" />
 		<PoemControls />
+		<PoemBody />
 	</div>
 </template>
 
 <script>
+import PoemHeader from '@/components/PoemHeader.vue';
+import PoemBody from '@/components/PoemBody.vue';
 import PoemControls from '@/components/PoemControls.vue';
 
 export default {
 	name: 'Poem',
 	components: {
-		PoemControls
+		PoemHeader,
+		PoemBody,
+		PoemControls,
 	},
+	data: () => ({title: "This is a poem!"})
 };
 </script>
 
