@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 import PoemHeader from '@/components/PoemHeader.vue';
 import PoemBody from '@/components/PoemBody.vue';
 import PoemControls from '@/components/PoemControls.vue';
@@ -18,7 +20,7 @@ export default {
 		PoemBody,
 		PoemControls,
 	},
-	data: () => ({title: "This is a poem!"})
+	computed: mapState(['title']),
 };
 </script>
 
@@ -26,9 +28,9 @@ export default {
 .poem-container {
 	// animation: fadeIn 0.1s ease-in-out forwards;
 	background-color: $bg-color;
+	// opacity: 0;
 	padding: 0 20px 80px;
 	position: relative;
-	// opacity: 0;
 	width: 100%;
 
 	@include atMedium {

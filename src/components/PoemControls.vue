@@ -9,7 +9,7 @@
 			</a>
 		</span>
 		<span>
-			<span
+			<span 
 				class="poem-controls__icon"
 				:class="undoClass"
 				@Click="editHistory('undo')"
@@ -19,7 +19,7 @@
 			<span
 				class="poem-controls__icon"
 				:class="newPoemClass"
-				@click="newPoem()"
+				@click="newPoem"
 				title="New poem">
 				<i class="material-icons md-48">refresh</i>
 				<span class="poem-controls__icon__caption">
@@ -36,7 +36,7 @@
 		</span>
 		<span
 			class="poem-controls__icon"
-			@click="editPoem()"
+			@click="editPoem"
 			title="Edit poem">
 			<i class="material-icons md-48">
 				{{editModeIcon}}
@@ -49,13 +49,18 @@
 export default {
 	name: 'Poem',
 	components: {},
-	data: () => ({
-		editModeIcon: 'mode_edit',
-		newPoemClass: '',
-		undoClass: ' poem-controls__icon--hidden',
-		redoClass: ' poem-controls__icon--hidden',
-	}),
+	data() {
+		return {
+			editModeIcon: 'mode_edit',
+			newPoemClass: '',
+			undoClass: ' poem-controls__icon--hidden',
+			redoClass: ' poem-controls__icon--hidden',
+		};
+	},
 	methods: {
+		newPoem() {
+			this.$store.dispatch('newPoem');
+		},
 		shareLink() {
 			return 'https://www.google.com';
 			const whatsAppPre = 'whatsapp://send?text=';
@@ -64,12 +69,11 @@ export default {
 
 			let poemText = `${title.toUpperCase()}\n\n`;
 
-			chosenLines.forEach(line => {
+			chosenLines.forEach((line) => {
 				poemText += `${lines[line]}\n`;
 			});
 
-			const whatsAppLink =
-				whatsAppPre + encodeURI(poemText + whatsAppPost);
+			const whatsAppLink = whatsAppPre + encodeURI(poemText + whatsAppPost);
 
 			return whatsAppLink;
 		},

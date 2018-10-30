@@ -5,12 +5,11 @@
 			placeholder="Enter a phrase"
 			autoComplete="off"
 			autoFocus
-			v-model="input" />
-
+			v-model="input">
 		<input
 			type="submit"
-			value="Make a new poem"
-			:class="{ 'input-form__submit-hidden': !input }"/>
+			:value="submitText"
+			:class="{ 'hidden': !input && !loading }">
 	</form>
 </template>
 
@@ -18,14 +17,24 @@
 export default {
 	name: 'InputForm',
 	props: {},
-	data: () => ({ input: '' }),
+	data() {
+		return {
+			input: '',
+		};
+	},
 	methods: {
 		submitPoem() {
-			console.log(this.input);
 			if (this.input) {
-				// poemSearch(this.input);
-				this.input = '';
+				this.$store.dispatch('poemSearch', this.input);
 			}
+		},
+	},
+	computed: {
+		loading() {
+			return this.$store.state.loading;
+		},
+		submitText() {
+			return this.loading ? 'Loading...' : 'Make a new poem';
 		},
 	},
 };
@@ -76,7 +85,7 @@ export default {
 		padding: 10px;
 		transition: 0.1s all;
 		width: 100%;
-		
+
 		&[type='text'] {
 			border-bottom: 1px solid $primary-color;
 		}
@@ -87,7 +96,8 @@ export default {
 			color: $bg-color;
 			cursor: pointer;
 			height: 40px;
-			&.input-form__submit-hidden {
+
+			&.hidden {
 				padding: 0;
 				height: 0;
 			}
