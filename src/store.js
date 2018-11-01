@@ -36,17 +36,46 @@ export default new Vuex.Store({
 		toggleEditState(state) {
 			state.editMode = !state.editMode;
 		},
+		setHistory(state, newHistory) {
+			state.history = newHistory;
+		},
+		addToHistory(state, itemToAdd) {
+			state.history.prev.push(itemToAdd);
+		},
 	},
 	actions: {
+		editHistory({ commit, state }, direction) {
+			let prev, next, newChosenLines;
+
+			if (direction === 'undo') {
+				next = [state.chosenLines, ...state.history.next];
+				prev = state.history.prev;
+				newChosenLines = prev.pop();
+			} else if (direction === 'redo') {
+				prev = [...state.history.prev, state.chosenLines];
+				next = state.history.next;
+				newChosenLines = next.shift();
+			}
+
+			commit('setHistory', { prev, next });
+			commit('setChosenLines', newChosenLines);
+		},
 		newPoem({ commit }) {
 			commit('resetState');
 			router.push('/');
 		},
 		refreshLine({ commit, state }, lineNumber) {
 			const newLineIndex = randomLineIndex(state.lines);
-			let newChosenLines = state.chosenLines;
+			let newChosenLines = [...state.chosenLines];
 			newChosenLines.splice(lineNumber, 1, newLineIndex);
-
+			
+			commit('addToHistory', state.chosenLines);
+			commit('setChosenLines', newChosenLines);
+			// add to history
+		},
+		refreshPoem({ commit, state }) {
+			commit('addToHistory', state.chosenLines);
+			const newChosenLines = chooseLines(state.lines);
 			commit('setChosenLines', newChosenLines);
 		},
 		poemSearch({ commit, state }, searchTerm) {

@@ -9,37 +9,22 @@
 			</a>
 		</span>
 		<span>
-			<span 
-				class="poem-controls__icon"
-				:class="undoClass"
-				@Click="editHistory('undo')"
-				title="Undo action">
+			<span class="poem-controls__icon" :class="undoClass" @click="editHistory('undo')" title="Undo action">
 				<i class="material-icons md-48">undo</i>
 			</span>
-			<span
-				class="poem-controls__icon"
-				:class="newPoemClass"
-				@click="newPoem"
-				title="New poem">
+			<span class="poem-controls__icon" :class="newPoemClass" @click="newPoem" title="New poem">
 				<i class="material-icons md-48">refresh</i>
 				<span class="poem-controls__icon__caption">
 					New poem
 				</span>
 			</span>
-			<span
-				class="poem-controls__icon"
-				:class="redoClass"
-				@click="editHistory('redo')"
-				title="Redo action">
+			<span class="poem-controls__icon" :class="redoClass" @click="editHistory('redo')" title="Redo action">
 				<i class="material-icons md-48">redo</i>
 			</span>
 		</span>
-		<span
-			class="poem-controls__icon"
-			@click="editPoem"
-			title="Edit poem">
+		<span class="poem-controls__icon" @click="editPoem" title="Edit poem">
 			<i class="material-icons md-48">
-				{{editModeIcon}}
+				{{ editModeIcon }}
 			</i>
 		</span>
 	</div>
@@ -49,17 +34,37 @@
 export default {
 	name: 'Poem',
 	components: {},
-	data() {
-		return {
-			editModeIcon: 'mode_edit',
-			newPoemClass: '',
-			undoClass: ' poem-controls__icon--hidden',
-			redoClass: ' poem-controls__icon--hidden',
-		};
+	computed: {
+		editModeIcon() {
+			return this.$store.state.editMode ? 'done' : 'mode_edit';
+		},
+		newPoemClass() {
+			return this.$store.state.editMode ? 'poem-controls__icon--hidden' : '';
+		},
+		undoClass() {
+			if (this.$store.state.editMode === false)
+				return ' poem-controls__icon--hidden';
+			return this.$store.state.history.prev.length > 0
+				? ''
+				: ' poem-controls__icon--hidden';
+		},
+		redoClass() {
+			if (this.$store.state.editMode === false)
+				return ' poem-controls__icon--hidden';
+			return this.$store.state.history.next.length > 0
+				? ''
+				: ' poem-controls__icon--hidden';
+		},
 	},
 	methods: {
 		newPoem() {
 			this.$store.dispatch('newPoem');
+		},
+		editPoem() {
+			this.$store.commit('toggleEditState');
+		},
+		editHistory(direction) {
+			this.$store.dispatch('editHistory', direction);
 		},
 		shareLink() {
 			return 'https://www.google.com';
@@ -143,6 +148,7 @@ export default {
 		@include atMedium {
 			margin: 0;
 			opacity: 0.4;
+
 			&:hover {
 				opacity: 1;
 			}

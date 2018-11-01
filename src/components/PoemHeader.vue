@@ -1,6 +1,6 @@
 <template>    
-	<div className="poem-header">
-		<h1 className="poem-header__title">{{title}}</h1>
+	<div class="poem-header">
+		<h1 class="poem-header__title">{{title}}</h1>
 	</div>
 </template>
 
