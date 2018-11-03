@@ -1,5 +1,5 @@
 <template>
-	<div class="poem-container" :class="{'edit-mode': $store.state.editMode}">
+	<div class="poem-container" :class="{'edit-mode': $store.state.editMode}" v-if="title">
 		<PoemHeader :title="title" />
 		<PoemControls />
 		<PoemBody />
@@ -21,6 +21,9 @@ export default {
 		PoemControls,
 	},
 	computed: mapState(['title']),
+	created() {
+		if (this.title === null) this.$router.push('/');
+	},
 };
 </script>
 
