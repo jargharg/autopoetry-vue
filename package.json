@@ -25,10 +25,10 @@
     "vue-template-compiler": "^2.5.17"
   },
   "babel": {
-		"presets": [
-			"@vue/app"
-		]
-	},
+    "presets": [
+      "@vue/app"
+    ]
+  },
   "postcss": {
     "plugins": {
       "autoprefixer": {}

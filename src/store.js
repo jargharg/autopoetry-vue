@@ -68,7 +68,7 @@ export default new Vuex.Store({
 			const newLineIndex = randomLineIndex(state.lines);
 			let newChosenLines = [...state.chosenLines];
 			newChosenLines.splice(lineNumber, 1, newLineIndex);
-			
+
 			commit('addToHistory', state.chosenLines);
 			commit('setChosenLines', newChosenLines);
 			// add to history
@@ -78,12 +78,12 @@ export default new Vuex.Store({
 			const newChosenLines = chooseLines(state.lines);
 			commit('setChosenLines', newChosenLines);
 		},
-		poemSearch({ commit, state }, searchTerm) {
+		async poemSearch({ commit, state }, searchTerm) {
 			commit('setLoading', true);
 
 			const safeSearch = searchTerm.replace(/\?|!/g, '');
 
-			const setPoemState = (apiResponse) => {
+			const setPoemState = apiResponse => {
 				const parsedData = parseResponse(apiResponse);
 				state.title = searchTerm;
 				state.lines = parsedData;
@@ -91,6 +91,8 @@ export default new Vuex.Store({
 				commit('setLoading', false);
 				router.push('/poem');
 			};
+
+			const { response } = await fetch('https://jarodhargreav.es/search');
 
 			// TODO refactor - could use a recursive function
 			let apiTerm = safeSearch.replace(/ /g, ' AND ');
