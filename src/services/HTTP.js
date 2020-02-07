@@ -1,5 +1,5 @@
 const ROOT_URL = 'https://content.guardianapis.com/search?show-fields=body&q=';
-const API_KEY = '2c7e590d-dde8-498a-b351-b008c42edf52';
+const API_KEY = 'dcb6c662-5f3a-4f7a-a57b-c0d7b815c729';
 
 const HTTP = {
 	async search(searchTerm) {
