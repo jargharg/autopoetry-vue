@@ -13,7 +13,7 @@ export default new Vuex.Store({
 		editMode: false,
 		history: { prev: [], next: [] },
 		lines: [],
-		title: '',
+		title: null,
 	},
 	mutations: {
 		resetState(state) {
@@ -22,7 +22,7 @@ export default new Vuex.Store({
 			state.editMode = false;
 			state.history = { prev: [], next: [] };
 			state.lines = [];
-			state.title = '';
+			state.title = null;
 		},
 		setChosenLines(state, chosenLines) {
 			state.chosenLines = chosenLines;

@@ -15,8 +15,6 @@ export function chooseLines(lines) {
 }
 
 export function parseResponse(response) {
-	console.log(response);
-	
 	const results = response.results;
 
 	const articles = results

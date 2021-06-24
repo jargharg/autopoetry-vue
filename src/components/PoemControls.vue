@@ -3,25 +3,21 @@
 		<span class="poem-controls__icon">
 			<a :href='shareLink()' title="Share to WhatsApp">
 				<i class="material-icons md-48">share</i>
-				<span class="poem-controls__icon__caption">
-					Share to WhatsApp
-				</span>
 			</a>
 		</span>
+
 		<span>
 			<span class="poem-controls__icon" :class="undoClass" @click="editHistory('undo')" title="Undo action">
 				<i class="material-icons md-48">undo</i>
 			</span>
 			<span class="poem-controls__icon" :class="newPoemClass" @click="newPoem" title="New poem">
 				<i class="material-icons md-48">refresh</i>
-				<span class="poem-controls__icon__caption">
-					New poem
-				</span>
 			</span>
 			<span class="poem-controls__icon" :class="redoClass" @click="editHistory('redo')" title="Redo action">
 				<i class="material-icons md-48">redo</i>
 			</span>
 		</span>
+
 		<span class="poem-controls__icon" @click="editPoem" title="Edit poem">
 			<i class="material-icons md-48">
 				{{ editModeIcon }}
@@ -67,15 +63,14 @@ export default {
 			this.$store.dispatch('editHistory', direction);
 		},
 		shareLink() {
-			return 'https://www.google.com';
 			const whatsAppPre = 'whatsapp://send?text=';
 			const whatsAppPost =
 				'\nMake your own autopoem at jarodhargreav.es/autopoetry';
 
-			let poemText = `${title.toUpperCase()}\n\n`;
+			let poemText = `${this.$store.state.title.toUpperCase()}\n\n`;
 
-			chosenLines.forEach((line) => {
-				poemText += `${lines[line]}\n`;
+			this.$store.state.chosenLines.forEach((line) => {
+				poemText += `${this.$store.state.lines[line]}\n`;
 			});
 
 			const whatsAppLink = whatsAppPre + encodeURI(poemText + whatsAppPost);
@@ -84,29 +79,6 @@ export default {
 		},
 	},
 };
-
-// from state:
-// 		title: state.poem.title,
-// 		history: state.poem.history,
-// 		lines: state.poem.lines,
-// 		chosenLines: state.poem.chosenLines,
-// 		editMode: state.poem.editMode
-
-// if (nextProps.editMode) {
-// 	this.editModeIcon = 'done';
-// 	this.newPoemClass = ' poem-controls__icon--hidden';
-// 	nextProps.history.prev.length > 0
-// 		? (this.undoClass = '')
-// 		: (this.undoClass = ' poem-controls__icon--hidden');
-// 	nextProps.history.next.length > 0
-// 		? (this.redoClass = '')
-// 		: (this.redoClass = ' poem-controls__icon--hidden');
-// } else {
-// 	this.editModeIcon = 'mode_edit';
-// 	this.newPoemClass = '';
-// 	this.undoClass = ' poem-controls__icon--hidden';
-// 	this.redoClass = ' poem-controls__icon--hidden';
-// }
 </script>
 
 <style lang="scss">
@@ -152,18 +124,6 @@ export default {
 			&:hover {
 				opacity: 1;
 			}
-		}
-
-		&__caption {
-			font-size: 0.75em;
-			opacity: 0;
-			overflow: hidden;
-			padding-left: 7px;
-			position: absolute;
-			transform: translateY(50%);
-			transition: opacity 0.2s ease-out;
-			top: 50%;
-			width: 0;
 		}
 
 		&--hidden {
