@@ -1,11 +1,17 @@
 <template>
-	<ul class="poem-body">
+	<div class="poem-body">
 		<div class="poem-body__refresh" @click="refreshPoem">
 			<i class="material-icons md-24">cached</i>
 		</div>
-
-		<PoemLine v-for="(lineIndex, index) in chosenLines" :key="index" :index="index" :lineIndex="lineIndex" />
-	</ul>
+		<transition-group name="poem-line" tag="ul" class="poem-body__list">
+			<PoemLine
+				v-for="(lineIndex, index) in chosenLines"
+				:key="`${index}-${lineIndex}`"
+				:index="index"
+				:lineIndex="lineIndex"
+			/>
+		</transition-group>
+	</div>
 </template>
 
 <script>
@@ -28,12 +34,12 @@ export default {
 <style lang="scss">
 .poem-body {
 	font-weight: $font-weight;
-	padding: 0;
-	margin: 0;
-	position: relative;
-}
 
-.poem-body {
+	&__list {
+		padding: 0;
+		margin: 0;
+	}
+
 	&__refresh {
 		color: $secondary-color;
 		cursor: pointer;
@@ -90,5 +96,19 @@ export default {
 		top: 0;
 		transition: 0.2s all;
 	}
+}
+
+.poem-line-enter-active,
+.poem-line-leave-active {
+	transition: opacity 0.3s, transform 0.3s;
+}
+.poem-line-leave-active {
+	display: none;
+}
+
+.poem-line-enter,
+.poem-line-leave-to {
+	opacity: 0;
+	transform: translateY(30px);
 }
 </style>

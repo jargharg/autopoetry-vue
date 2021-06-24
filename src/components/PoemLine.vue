@@ -37,7 +37,6 @@ export default {
 
 	&__text {
 		display: block;
-		min-height: 10px;
 		height: 100%;
 		transition: 0.2s all;
 		padding: 0 10px;
