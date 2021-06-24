@@ -40,6 +40,7 @@ export default new Vuex.Store({
 			state.history = newHistory;
 		},
 		addToHistory(state, itemToAdd) {
+			state.history.next = [];
 			state.history.prev.push(itemToAdd);
 		},
 	},
@@ -68,10 +69,9 @@ export default new Vuex.Store({
 			const newLineIndex = randomLineIndex(state.lines);
 			let newChosenLines = [...state.chosenLines];
 			newChosenLines.splice(lineNumber, 1, newLineIndex);
-			
+
 			commit('addToHistory', state.chosenLines);
 			commit('setChosenLines', newChosenLines);
-			// add to history
 		},
 		refreshPoem({ commit, state }) {
 			commit('addToHistory', state.chosenLines);
@@ -94,12 +94,17 @@ export default new Vuex.Store({
 
 			// TODO refactor - could use a recursive function
 			let apiTerm = safeSearch.replace(/ /g, ' AND ');
-			HTTP.search(apiTerm).then(({ response }) => {
+			HTTP.search(apiTerm).then(({ response } = {}) => {
+				if (!response) {
+					commit('setLoading', false);
+					return;
+				}
+
 				if (response.total > 0) {
 					setPoemState(response);
 				} else {
 					apiTerm = safeSearch.replace(/ /g, ' OR ');
-					HTTP.search(apiTerm).then(({ response }) => {
+					HTTP.search(apiTerm).then(({ response } = {}) => {
 						if (response.total > 0) {
 							setPoemState(response);
 						} else {
