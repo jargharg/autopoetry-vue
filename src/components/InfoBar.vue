@@ -1,22 +1,22 @@
 <template>
-	<header class="top-nav" @click="infoToggle()">
-		<div  class="top-nav__details" :class="{'top-nav__details--expanded': expanded}">
-			Inspired by the cut-up technique of William S Burroughs,
-			this app searches for your phrase in the
+	<header class="info-bar" @click="expanded = !expanded">
+		<div
+			class="info-bar__details"
+			:class="{ 'info-bar__details--expanded': expanded }"
+		>
+			Inspired by the cut-up technique of William S Burroughs, this app searches for
+			your phrase in the
 			<a href="http://open-platform.theguardian.com/" target="_blank">
 				Guardian API
 			</a>
-			and slices up an article to make a poem with random
-			snippets. Made by
-			<a href="https://jarodhargreav.es" target="_blank">
-				Jarod Hargreaves
-			</a>. 
+			and slices up an article to make a poem with random snippets. Made by
+			<a href="https://jarodhargreav.es" target="_blank"> Jarod Hargreaves </a>.
 			<a href="https://github.com/jargharg/autopoetry/" target="_blank">
 				See it on Github
 			</a>
 		</div>
-		<div class="top-nav__name">AUTOPOETRY</div>
-		<div class="top-nav__info-icon">
+		<div class="info-bar__name">AUTOPOETRY</div>
+		<div class="info-bar__info-icon">
 			<i class="material-icons">info_outline</i>
 		</div>
 	</header>
@@ -24,19 +24,12 @@
 
 <script>
 export default {
-	name: 'TopNav',
-	props: {},
 	data: () => ({ expanded: false }),
-	methods: {
-		infoToggle() {
-			this.expanded = !this.expanded;
-		},
-	},
 };
 </script>
 
 <style lang="scss">
-.top-nav {
+.info-bar {
 	border-bottom: 1px solid $grid-color;
 	color: $primary-color;
 	color: $bg-color;
@@ -47,7 +40,7 @@ export default {
 	top: 0;
 	width: 100%;
 	z-index: 10;
-	&:hover > .top-nav__info-icon {
+	&:hover > .info-bar__info-icon {
 		opacity: 1;
 	}
 
@@ -64,7 +57,7 @@ export default {
 			color: $primary-color;
 		}
 
-		&.hidden + .top-nav__info-icon {
+		&.hidden + .info-bar__info-icon {
 			color: $primary-color;
 		}
 	}
@@ -86,24 +79,25 @@ export default {
 		background: $primary-color;
 		color: $bg-color;
 		font-size: 0.7em;
-		max-height: 0;
+		height: 0;
+		opacity: 0;
 		overflow: hidden;
-		padding: 0 10px;
+		padding: 10px;
 		position: absolute;
-		transition: 0.2s all ease-out;
-		visibility: hidden;
+		transform: translateY(-100%);
+		transition: 0.2s transform, 0.2s opacity;
 		width: 100%;
-		z-index: 100;
+		z-index: 10;
 
 		a {
 			color: inherit;
 			display: inline-block;
 		}
-		
+
 		&--expanded {
-			max-height: 400px;
-			padding: 10px;
-			visibility: visible;
+			height: auto;
+			opacity: 1;
+			transform: translateY(0);
 		}
 	}
 }

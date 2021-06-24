@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<TopNav />
+		<InfoBar />
 
 		<div class="container">
 			<router-view />
@@ -9,12 +9,12 @@
 </template>
 
 <script>
-import TopNav from '@/components/TopNav.vue';
-	
+import InfoBar from '@/components/InfoBar.vue';
+
 export default {
 	name: 'App',
 	components: {
-		TopNav,
+		InfoBar,
 	},
 };
 </script>
