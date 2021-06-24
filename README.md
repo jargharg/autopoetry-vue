@@ -1,16 +1,27 @@
 # autopoetry-vue
 
 ## Project setup
+
+Create a .env file and add Guardian Dev API key as VUE_APP_API_KEY, e.g.
+
 ```
-npm install
+VUE_APP_API_KEY=xxx_xx_xxxx_
 ```
 
-### Compiles and hot-reloads for development
+Install dependencies with
+
 ```
-npm run serve
+yarn
 ```
 
-### Compiles and minifies for production
+### Compile and hot-reload for development
+
 ```
-npm run build
+yarn serve
+```
+
+### Compile and minify for production
+
+```
+yarn build
 ```
