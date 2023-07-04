@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "deploy": "npm run build && firebase deploy",
     "build": "vue-cli-service build",
     "serve": "vue-cli-service serve",
     "start": "vue-cli-service serve"
